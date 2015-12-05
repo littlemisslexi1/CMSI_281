@@ -67,7 +67,7 @@ public class BinaryTree implements Iterable{
 
 			private Node x;
 			private Node y;
-			private Stack z;
+			private Stack<Node> z;
 
 
 			public treeiterator(Node root){
@@ -118,7 +118,7 @@ public class BinaryTree implements Iterable{
 
 			private Node x;
 			private Node y;
-			private Stack z;
+			private Stack<Node> z;
 
 
 			public IOiterator(Node root){
@@ -131,16 +131,13 @@ public class BinaryTree implements Iterable{
 
 
 			public Object next(){
-				y=x;
-				if(x.getleftson() != null){
-					z.push(x);
-					x= x.getleftson();
-				}else{
-					if(z.size() >= 1){
-						x= (Node)z.pop();
-
+				while(z.isEmpty() || x != null){
+					if(x != null){
+						z.push(x);
+						x = x.getleftson();
 					}else{
-						x= null;
+						y= z.pop();
+						x= y.getrightbro();
 					}
 				}
 				return y.getdata();
@@ -199,8 +196,8 @@ public class BinaryTree implements Iterable{
 			return false;
 
 		}else{
-			Stack thisStack = new Stack();
-			Stack objStack = new Stack();
+			Stack<Node> thisStack = new Stack<Node>();
+			Stack<Node> objStack = new Stack<Node>();
 			Node x = this.cursor;
 			Node y = ((BinaryTree)obj).cursor;
 			for(int a = 0; a < this.size(); a++){
